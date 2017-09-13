@@ -9,8 +9,8 @@ import sys
 #sys.setdefaultencoding('UTF8')
 project_range = 2640
 
-e = open (sys.argv[1],'r')
-conn = psycopg2.connect(dbname="elect", user="elect", password="elect")
+e = open ('CBOW.txt','r')
+conn = psycopg2.connect(dbname="gisdata", user="eayoungs", password="", port="5434")
 cur = conn.cursor()
 streets = {}
 streets_regexen = {}
@@ -50,9 +50,9 @@ for n in range(0,len(words)):
         if n+a == len(words):
             break
         for b in range(n,n+a):
-             street_words.append(words[b])
+            street_words.append(words[b])
         word = ' '.join(street_words)
-        sql = "select street,st_type from stclines where street ilike '{0}' and length(street) > 2".format(word)
+        sql = "select street,st_type from stclines_streets where street ilike '{0}' and length(street) > 2".format(word)
         cur.execute(sql)
         # if this token is a street name, include it in the regex
         res = cur.fetchall()
